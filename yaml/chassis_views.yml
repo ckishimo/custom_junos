@@ -127,5 +127,8 @@ junos_inventory_view:
     serial: serial-number
     description: description
     part_number: part-number
+    clei_code: clei-code
+    model: model-number
+    version: version
 
 
