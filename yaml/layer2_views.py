@@ -9,7 +9,8 @@ from napalm.base.utils import py23_compat
 
 
 def _preprocess_yml(path):
-    """Dynamically create PY3 version of the file by re-writing 'unicode' to 'str'."""
+    """Dynamically create PY3 version of the file by re-writing
+    'unicode' to 'str'."""
     with open(path) as f:
         tmp_yaml = f.read()
     return re.sub(r"unicode", "str", tmp_yaml)

@@ -9,9 +9,12 @@ class CustomJunOSDriver(JunOSDriver):
         """ Returns a list of vlans and ports
             show vlans
         """
-        vlans = layer2_views.junos_vlans_table(self.device)
-        vlans.get()
+        vlans = layer2_views.junos_vlans_table(self.device).get()
         vlans_items = vlans.items()
         vlans_table = []
+
+        for vlan_table_entry in vlans_items:
+            vlan_entry = {elem[0]: elem[1] for elem in vlan_table_entry[1]}
+            vlans_table.append(vlan_entry)
 
         return vlans_table

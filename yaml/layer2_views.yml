@@ -1,19 +1,17 @@
 ---
-
 #
 # VLANs table
 #
 junos_vlans_table:
   rpc: get-vlan-information
-  item: alarm-detail
-  key: alarm-description
-  view: junos_alarms_view
+  item: l2ng-l2ald-vlan-instance-group
+  key: l2ng-l2rtb-vlan-name
+  view: junos_vlans_view
 
-junos_alarms_view:
+junos_vlans_view:
   fields:
-    time: alarm-time
-    class: alarm-class
-    description: alarm-description
+    name: l2ng-l2rtb-vlan-name
+    id: l2ng-l2rtb-vlan-tag
 
 #
 # LAGs table
