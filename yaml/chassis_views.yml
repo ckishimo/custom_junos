@@ -115,8 +115,6 @@ junos_pic_view:
 #
 junos_inventory_table:
   rpc: get-chassis-inventory
-  args:
-    detail: True
   item: chassis/chassis-module
   view: junos_inventory_view
   # FIXME: Need to get submodules (chassis/chassis-module/chassis-sub-module)
