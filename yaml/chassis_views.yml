@@ -1,0 +1,131 @@
+---
+
+#
+# Alarm table
+# show chassis alarms
+#
+junos_alarms_table:
+  rpc: get-alarm-information
+  item: alarm-detail
+  # TIP: key is needed as there is no <name> within <alarm-detail>
+  key: alarm-description
+  view: junos_alarms_view
+
+junos_alarms_view:
+  fields:
+    time: alarm-time
+    class: alarm-class
+    description: alarm-description
+
+#
+# FPC table (get fpc status)
+# show chassis fpc
+#
+junos_fpc_table:
+  rpc: get-fpc-information
+  item: fpc
+  key: slot
+  view: junos_fpc_view
+
+junos_fpc_view:
+  fields:
+    slot: slot
+    status: state
+    temperature: { temperature: int }
+    cpu_usage: { cpu-total: int }
+    buffer_usage: { memory-buffer-utilization: int }
+    # FIXME: To get the uptime need args: detail: True
+    # uptime: up-time
+
+#
+# Hardware models (get module type)
+# show chassis hardware
+#
+junos_fpc_hardware_table:
+  rpc: get-chassis-inventory
+  args:
+    models: true
+  item: chassis/chassis-module
+  view: junos_fpc_hardware_view
+
+junos_fpc_hardware_view:
+  fields:
+    is_fpc: { name: True=regex(FPC) }
+    serial: serial-number
+    description: description
+    model: model-number
+
+#
+# FIXME: Not working from get_modules()
+# FPC firmware version
+# show chassis firmware
+#
+junos_fpc_firmware_table:
+  rpc: get-firmware-information
+  item: chassis-module
+  key: name
+  view: junos_fpc_firmware_view
+
+junos_fpc_firmware_view:
+  fields:
+    name: name
+    version: firmware
+
+#
+# Fabric table
+# show chassis fabric extended
+# EX only
+# 
+junos_fabric_table:
+  rpc: get-fm-ext-state-information
+  item: fm-ext-state-item
+  key: plane-slot
+  view: junos_fabric_view
+
+junos_fabric_view:
+  fields:
+    slot: plane-slot
+    status: state
+    link_error: { link-error: False=regex(NO) }
+    link_tf: { link-tf: False=regex(NO) }
+    destination_error: { destination-error: False=regex(NO/ NO) }
+    uptime: up-time
+
+#
+# PIC table
+# show chassis fpc pic-status
+#
+junos_pic_table:
+  rpc: get-pic-information
+  item: fpc/pic
+  key: pic-slot
+  view: junos_pic_view
+
+junos_pic_view:
+  fields:
+    slot: { ../slot: int }
+    pic_slot: { pic-slot: int }
+    status: pic-state
+    fpc_type: ../description
+    pic_type: pic-type
+
+#
+# SERIAL numbers table
+# show chassis hardware
+#
+junos_inventory_table:
+  rpc: get-chassis-inventory
+  args:
+    detail: True
+  item: chassis/chassis-module
+  view: junos_inventory_view
+  # FIXME: Need to get submodules (chassis/chassis-module/chassis-sub-module)
+
+junos_inventory_view:
+  fields:
+    name: name
+    serial: serial-number
+    description: description
+    part_number: part-number
+
+
