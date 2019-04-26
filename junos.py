@@ -16,9 +16,7 @@ class CustomJunOSDriver(JunOSDriver):
         alarms_items = alarms.items()
 
         for item in alarms_items:
-            alarm_entry = {
-                elem[0]: elem[1] for elem in item[1]
-            }
+            alarm_entry = {elem[0]: elem[1] for elem in item[1]}
             alarms_table.append(alarm_entry)
 
         return alarms_table
