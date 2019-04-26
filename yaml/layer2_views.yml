@@ -1,0 +1,50 @@
+---
+
+#
+# VLANs table
+#
+junos_vlans_table:
+  rpc: get-vlan-information
+  item: alarm-detail
+  key: alarm-description
+  view: junos_alarms_view
+
+junos_alarms_view:
+  fields:
+    time: alarm-time
+    class: alarm-class
+    description: alarm-description
+
+#
+# LAGs table
+#
+customAEPhyPortTable:
+  rpc: get-interface-information
+  args:
+    extensive: True
+    interface_name: '[ae]-*'
+  args_key: interface_name
+  item: physical-interface
+  view: customAEPhyPortView
+
+customAEPhyPortView:
+  groups:
+    logical: logical-interface
+    phy: logical-interface/lag-traffic-statistics
+
+  fields:
+    oper: oper-status
+    admin: admin-status
+    description: description
+    mtu: { mtu : int }
+    link_mode: link-mode
+    speed: speed
+    current_macaddr: current-physical-address
+    hardware_macaddr: hardware-physical-address
+    flapped: interface-flapped
+
+  fields_logical:
+    ae_name: name
+
+  fields_phy:
+    interface_phy: lag-link/name

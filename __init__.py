@@ -1,3 +1,3 @@
 from junos import CustomJunOSDriver
 
-__all__ = ('CustomJunOSDriver',)
+__all__ = ("CustomJunOSDriver",)
