@@ -1,5 +1,5 @@
 from napalm.junos.junos import JunOSDriver
-import layer2_views
+from custom_napalm.yaml import layer2_views
 
 
 class CustomJunOSDriver(JunOSDriver):
