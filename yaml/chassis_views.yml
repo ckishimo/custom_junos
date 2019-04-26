@@ -9,12 +9,20 @@ junos_alarms_table:
   item: alarm-detail
   # TIP: key is needed as there is no <name> within <alarm-detail>
   key: alarm-description
-  view: junos_alarms_view
+  view: junos_system_chassis_alarms_view
 
-junos_alarms_view:
+junos_system_alarms_table:
+  rpc: get-system-alarm-information
+  item: alarm-detail
+  key: alarm-description
+  view: junos_system_chassis_alarms_view
+
+# View for both tables
+junos_system_chassis_alarms_view:
   fields:
     time: alarm-time
     class: alarm-class
+    type: alarm-type
     description: alarm-description
 
 #

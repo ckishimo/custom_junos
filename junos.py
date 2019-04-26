@@ -6,14 +6,16 @@ class CustomJunOSDriver(JunOSDriver):
     """NAPALM custom methods."""
 
     def get_alarms(self):
-        """Returns a list of alarms.
+        """ Returns a list of alarms.
 
-            show chassis alarms
+            "show chassis alarms"
+            "show system alarms"
         """
         alarms_table = []
 
         alarms = chassis_views.junos_alarms_table(self.device).get()
-        alarms_items = alarms.items()
+        alarms_sys = chassis_views.junos_system_alarms_table(self.device).get()
+        alarms_items = alarms.items() + alarms_sys.items()
 
         for item in alarms_items:
             alarm_entry = {elem[0]: elem[1] for elem in item[1]}
